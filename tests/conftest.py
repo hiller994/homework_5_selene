@@ -1,6 +1,10 @@
 import pytest
-from selene import browser
+from selene import browser, Browser, by
+from selene.support.shared import config
 from selenium import webdriver
+from selenium.webdriver.chromium.webdriver import ChromiumDriver
+
+
 
 @pytest.fixture(scope='function', autouse=True) #autouse=True фикстура выполняется автоматически
 def browser_management():
@@ -18,3 +22,29 @@ def browser_management():
     yield
 
     browser.quit()
+
+    # пример внедрения селена в проект селениум, заворачивание в фикстуру функциона:
+    # пример фикстуры из селениум веб драйвер
+    @pytest.fixture()
+    def driver():
+        driver_options = webdriver.ChromeOptions()
+        driver_options.add_argument('--headless')
+        driver = webdriver.Chrome(service=ChromeService(executable_path=ChromDriverManager().install()), options=driver_options,)
+
+        yield driver
+
+        driver.quit()
+
+    #и к данному фрейфорку прикручиваем селен
+    @pytest.fixture()
+    def browser(driver): #зависит от браузера
+
+        yield Browser(config(driver=driver))
+
+    #пример использования данной фикстуры, внедрение селен
+    def test_complete_todo(driver, browser):
+        driver.get('///') #открываем ссылку
+        driver.find_element(*by.css('element').send_key('a' + Keys.ENTER))
+        browser.element('#new-todo').type('a') # замена на селен, вместо строчки выше
+        driver.find_element(*by.css('element').send_key('b' + Keys.ENTER))
+        driver.find_element(*by.css('element').send_key('c' + Keys.ENTER))
