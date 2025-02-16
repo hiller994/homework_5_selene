@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By #пример селениума в�
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
-from homework_5_selene.conditions import match
+from homework_5_selene.tests import match
 
 
 def test_complete_todo():
