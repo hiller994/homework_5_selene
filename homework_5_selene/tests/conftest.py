@@ -14,11 +14,7 @@ def browser_settings():
     browser.config.base_url = 'https://demoqa.com/automation-practice-form'
     browser.config.timeout = 5.0  # ЭТО ожидание селена, по умолчанию 4 сек
 
+
     yield
 
     browser.quit()
-
-@pytest.fixture(scope="session")
-def calendar(element, month):
-    browser.element(element).click()
-    browser.element(month).click()

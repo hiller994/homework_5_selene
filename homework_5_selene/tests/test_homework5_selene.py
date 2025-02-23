@@ -4,6 +4,9 @@ import pytest
 
 def test_practice_form(browser_settings):
     browser.open('/')
+    browser.driver.execute_script("$('#RightSide_Advertisement').remove()")
+    browser.driver.execute_script("$('#fixedban').remove()")
+    browser.driver.execute_script("$('footer').remove()")
     browser.element('[id="firstName"]').should(be.blank).type('Andrey')
     browser.element('[id="lastName"]').should(be.blank).type('Ignatov')
     browser.element('[id="userEmail"]').should(be.blank).type('homework5@gmail.com')
@@ -21,11 +24,13 @@ def test_practice_form(browser_settings):
     browser.element('[id="react-select-4-input"]').set_value('Kar').element('//*[contains(text(),"Karnal")]').click()
     browser.element('[id="submit"]').click()
     browser.element('[class="modal-content"]').should(be.visible)
-    browser.element('[class="modal-content"]').should(have.text('Andrey Ignatov'))
-    browser.element('[class="modal-content"]').should(have.text('homework5@gmail.com'))
-    browser.element('[class="modal-content"]').should(have.text('Male'))
-    browser.element('[class="modal-content"]').should(have.text('21 November,1994'))
-    browser.element('[class="modal-content"]').should(have.text('History'))
+    browser.element('[class="modal-content"]').should(have.text('Andrey Ignatov')) #Student Name
+    browser.element('[class="modal-content"]').should(have.text('homework5@gmail.com')) #Student Email
+    browser.element('[class="modal-content"]').should(have.text('Male')) #Gender
+    browser.element('[class="modal-content"]').should(have.text('8800553535')) #Mobile
+    browser.element('[class="modal-content"]').should(have.text('21 November,1994')) #Date of Birth
+    browser.element('[class="modal-content"]').should(have.text('History')) #Subjects
+    browser.element('[class="modal-content"]').should(have.text('Sport')) #Hobbies
     browser.element('[class="modal-content"]').should(have.text('test_pic.jpg'))
     browser.element('[class="modal-content"]').should(have.text('Test addres 12345'))
     browser.element('[class="modal-content"]').should(have.text('Haryana Karnal'))
